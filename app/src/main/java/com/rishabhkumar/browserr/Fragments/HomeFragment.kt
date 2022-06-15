@@ -1,10 +1,11 @@
-package com.rishabhkumar.browserr
+package com.rishabhkumar.browserr.Fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.rishabhkumar.browserr.R
 import com.rishabhkumar.browserr.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
