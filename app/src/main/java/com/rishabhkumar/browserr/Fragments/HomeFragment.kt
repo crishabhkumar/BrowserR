@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.rishabhkumar.browserr.Activities.MainActivity
 import com.rishabhkumar.browserr.R
 import com.rishabhkumar.browserr.databinding.FragmentHomeBinding
@@ -26,10 +27,17 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        val mainActivityRef = requireActivity() as MainActivity
+
         binding.homeSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             //call when user enter to search
             override fun onQueryTextSubmit(query: String?): Boolean {
-                (requireActivity() as MainActivity).changeTab(query!!, BrowseFragment(query))
+                if(mainActivityRef.checkForInternet(requireContext())){
+                    mainActivityRef.changeTab(query!!, BrowseFragment(query))
+                }else{
+                    Snackbar.make(binding.root,"Please connect to internet",3000).show()
+                }
                 return true
             }
 
