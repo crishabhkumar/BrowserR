@@ -11,11 +11,10 @@ import androidx.fragment.app.Fragment
 import com.rishabhkumar.browserr.R
 import com.rishabhkumar.browserr.databinding.FragmentBrowseBinding
 
-class BrowseFragment : Fragment() {
+class BrowseFragment(private var urlNew : String) : Fragment() {
 
     private lateinit var binding: FragmentBrowseBinding
 
-    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,6 +24,12 @@ class BrowseFragment : Fragment() {
         binding = FragmentBrowseBinding.bind(view)
 
 
+        return view
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun onResume() {
+        super.onResume()
         binding.browseWebView.settings.apply{
             javaScriptEnabled = true
             setSupportZoom(true)
@@ -36,11 +41,8 @@ class BrowseFragment : Fragment() {
             webViewClient = WebViewClient()
             webChromeClient = WebChromeClient()
 
-            loadUrl("https://www.google.com")
+            loadUrl(urlNew)
         }
-
-
-        return view
     }
 
 }

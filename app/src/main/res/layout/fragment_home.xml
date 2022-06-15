@@ -8,6 +8,7 @@
     android:background="@drawable/bg_gradient">
 
     <SearchView
+        android:id="@+id/homeSearchView"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
