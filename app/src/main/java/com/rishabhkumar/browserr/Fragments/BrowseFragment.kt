@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.URLUtil
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
@@ -13,7 +14,7 @@ import com.rishabhkumar.browserr.databinding.FragmentBrowseBinding
 
 class BrowseFragment(private var urlNew : String) : Fragment() {
 
-    private lateinit var binding: FragmentBrowseBinding
+    lateinit var binding: FragmentBrowseBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +42,12 @@ class BrowseFragment(private var urlNew : String) : Fragment() {
             webViewClient = WebViewClient()
             webChromeClient = WebChromeClient()
 
-            loadUrl(urlNew)
+            //default search engine setting
+            when{
+                URLUtil.isValidUrl(urlNew) -> loadUrl(urlNew)
+                urlNew.contains(".com",ignoreCase = true) -> loadUrl(urlNew)
+                else -> loadUrl("https://www.google.com/search?q=$urlNew")
+            }
         }
     }
 
