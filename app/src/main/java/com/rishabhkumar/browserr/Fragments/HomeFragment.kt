@@ -29,6 +29,8 @@ class HomeFragment : Fragment() {
         super.onResume()
 
         val mainActivityRef = requireActivity() as MainActivity
+        mainActivityRef.binding.topSearchBar.setText("")
+        binding.homeSearchView.setQuery("",false)
 
         binding.homeSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             //call when user enter to search
@@ -45,6 +47,17 @@ class HomeFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean = false
 
         })
+
+        mainActivityRef.binding.btnGoToSearch.setOnClickListener{
+            val query = mainActivityRef.binding.topSearchBar.text.toString()
+            if(mainActivityRef.checkForInternet(requireContext())){
+                mainActivityRef.changeTab(query, BrowseFragment(query))
+            }else{
+                Snackbar.make(binding.root,"Please connect to internet",3000).show()
+            }
+        }
+
+
     }
 
 }

@@ -27,14 +27,17 @@
                 android:src="@drawable/search_icon" />
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/topSearchBar"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/custom_design"
                 android:hint="@string/enter_url"
-                android:paddingHorizontal="5dp" />
+                android:paddingHorizontal="5dp"
+                android:singleLine="true"/>
 
             <ImageButton
+                android:id="@+id/btnGoToSearch"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackground"

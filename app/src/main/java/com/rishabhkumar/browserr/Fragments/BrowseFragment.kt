@@ -2,13 +2,16 @@ package com.rishabhkumar.browserr.Fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.URLUtil
 import android.webkit.WebChromeClient
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import com.rishabhkumar.browserr.Activities.MainActivity
 import com.rishabhkumar.browserr.R
 import com.rishabhkumar.browserr.databinding.FragmentBrowseBinding
 
@@ -31,6 +34,7 @@ class BrowseFragment(private var urlNew : String) : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onResume() {
         super.onResume()
+        val mainActivityRef = requireActivity() as MainActivity
         binding.browseWebView.settings.apply{
             javaScriptEnabled = true
             setSupportZoom(true)
@@ -39,7 +43,16 @@ class BrowseFragment(private var urlNew : String) : Fragment() {
         }
 
         binding.browseWebView.apply {
-            webViewClient = WebViewClient()
+            webViewClient = object:WebViewClient(){
+                override fun doUpdateVisitedHistory(
+                    view: WebView?,
+                    url: String?,
+                    isReload: Boolean
+                ) {
+                    super.doUpdateVisitedHistory(view, url, isReload)
+                    mainActivityRef.binding.topSearchBar.text = SpannableStringBuilder(url)
+                }
+            }
             webChromeClient = WebChromeClient()
 
             //default search engine setting
