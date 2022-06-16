@@ -53,7 +53,20 @@ class BrowseFragment(private var urlNew : String) : Fragment() {
                     mainActivityRef.binding.topSearchBar.text = SpannableStringBuilder(url)
                 }
             }
-            webChromeClient = WebChromeClient()
+            webChromeClient = object: WebChromeClient(){
+                override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
+                    super.onShowCustomView(view, callback)
+                    binding.browseWebView.visibility = View.GONE
+                    binding.customView.visibility = View.VISIBLE
+                    binding.customView.addView(view)
+                }
+
+                override fun onHideCustomView() {
+                    super.onHideCustomView()
+                    binding.browseWebView.visibility = View.VISIBLE
+                    binding.customView.visibility = View.GONE
+                }
+            }
 
             //default search engine setting
             when{
