@@ -1,6 +1,7 @@
 package com.rishabhkumar.browserr.Fragments
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
@@ -52,6 +53,17 @@ class BrowseFragment(private var urlNew : String) : Fragment() {
                     super.doUpdateVisitedHistory(view, url, isReload)
                     mainActivityRef.binding.topSearchBar.text = SpannableStringBuilder(url)
                 }
+
+                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                    super.onPageStarted(view, url, favicon)
+                    mainActivityRef.binding.progressBar.progress = 0
+                    mainActivityRef.binding.progressBar.visibility = View.VISIBLE
+                }
+
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    mainActivityRef.binding.progressBar.visibility = View.GONE
+                }
             }
             webChromeClient = object: WebChromeClient(){
                 override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
@@ -65,6 +77,11 @@ class BrowseFragment(private var urlNew : String) : Fragment() {
                     super.onHideCustomView()
                     binding.browseWebView.visibility = View.VISIBLE
                     binding.customView.visibility = View.GONE
+                }
+
+                override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                    super.onProgressChanged(view, newProgress)
+                    mainActivityRef.binding.progressBar.progress = newProgress
                 }
             }
 
